@@ -1,0 +1,45 @@
+package tiles;
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Texture {
+
+	protected int x=0;
+	protected int y=0;
+	Color color=Color.green;
+	
+	
+	protected boolean place=true;
+	
+	public Texture(int x, int y){
+		this.x=x*30;
+		this.y=y*30;
+	}
+	public Texture(int x, int y,int color){
+		this.x=x*30;
+		this.y=y*30;
+		if(color==0){
+			this.color=Color.green;
+		}
+		else if(color==1){
+			this.color=Color.RED;
+		}
+		else if(color==2){
+			this.color=Color.BLUE;
+		}
+	}
+	
+	public void draw(Graphics g){
+	
+		g.setColor(color);
+		g.fillRect(x,y,30,30);
+		
+		g.setColor(Color.BLACK);
+		g.drawRect(x,y,29,29);
+			
+	}
+	public boolean canPlace(){
+		return place;
+	}
+	
+}

@@ -1,0 +1,85 @@
+package enemy;
+
+import java.awt.Graphics;
+
+public class Wave {
+
+	private Thing[] wave= new Thing[5];	
+	//private int current=0;
+	public boolean running=false;
+	private int thiswave=0;
+
+	private int marker=50;
+	public Wave(){
+		for(int i=0;i<5;i++){
+			wave[i]=new Thing(30,60);
+			wave[i].toAction();
+			wave[i].go();
+
+		}
+
+	}
+	public void start(){
+		running =true;
+	}
+	public void stop(){
+		running = false;
+	}
+	public void action(int time){
+
+		if(time>50)
+			wave[0].move();
+		if(time>100)
+			wave[1].move();
+		if(time>150)
+			wave[2].move();
+		if(time>200)
+			wave[3].move();
+		if(time>250)
+			wave[4].move();
+	}
+	public void paint(Graphics g){
+		for(int i=0;i<5;i++){
+			wave[i].paint(g);
+		}
+	}
+	public boolean lastreach(){
+		boolean answer=false;
+		if (wave[4].reach()){
+			answer=true;
+		}
+		return answer;
+	}
+	public boolean reachcheck(){
+		boolean result=false;
+		for(int i=0;i<5;i++){
+			if(wave[i].reach())
+				result=true;
+		}
+		return result;
+	}
+	public void next(){
+		thiswave++;
+	}
+	public int currentwave(){
+		return thiswave;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

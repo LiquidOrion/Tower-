@@ -1,0 +1,27 @@
+package tiles;
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Path extends Texture{
+
+	Color color= Color.red;
+	
+
+	public Path(int x, int y) {
+		super(x, y);
+		place=false;
+	}
+
+	public void draw(Graphics g){
+		
+		g.setColor(color);
+		g.fillRect(x,y,30,30);
+		
+		g.setColor(Color.BLACK);
+		g.drawRect(x,y,29,29);
+				
+	}
+	
+	
+	
+}

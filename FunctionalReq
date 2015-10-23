@@ -1,0 +1,45 @@
+Functional requirements :
+
+
+Player:
+
+Player can view start screen: first thing player sees/ contains various pregame choices
+Player can select game difficulty: via selection on start screen / easier| harder by # enemies  
+Player can quit the game: via button on game screen/start screen, quits program 
+Player can start the game: via pressing button in start screen, initiating the game 
+Player can pause the game: via button on game screen, stops actions of game until resume
+Player can resume game: via button on game screen resumes action of game 
+Player can view amount of currency they currently have: via display on game screen 
+Player can view the amount of health they have remaining: via display on game screen 
+Player can view the current wave of enemies they are on: via display on game screen 
+Player can select individual towers: via selecting token on game-action screen
+Player can choose to spawn different towers: via selecting tokens on game screen
+Player can place towers: via selecting tower and location with correct placement/ currency
+Player can move individual towers: via selecting tower and new location 
+Player can lose lives: via enemy getting to end of path 
+Player can use power ups: via button on game screen/ power-up effects gameplay mechanic 
+Player can select from power ups: via buttons on start screen
+Player can start music: via button on game screen
+Player can mute music: via mute button on game screen 
+
+
+Enemy: 
+
+Enemies can spawn at start of path: enemy starts at beginning  
+Enemies spawn in waves: certain number of enemies per wave/ waves increase by time 
+Enemies can move along path: enemies follow determined 	
+Enemies can attack the player: player loses life if enemy gets to end of path 
+Enemies can take damage: is projectile hit enemy, enemy loses health 
+Tower/projectile
+Towers can create projectiles: towers spawn projectiles at certain rate
+Towers can check if an enemy is in the area: towers spawn projectiles at certain rate
+Projectiles can move towards enemy: projectiles move towards enemies 
+
+
+Game:
+
+Game rewards player with currency: when killed enemy or finish wave 
+Game reports player loses: is all player lives are lost game over 
+Game checks for player currency: buying towers requires enough currency 
+Game check for tower placement: towers cannot be placed in certain spots
+Game checks for player lives: if all lives are lost then game over 		

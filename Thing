@@ -1,0 +1,80 @@
+package enemy;
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Thing {
+
+	private boolean active=false;
+	private int size=30;
+	private double speed=2.5;
+	private double curx,cury; 
+	private int endx=580,endy=510;
+	private	boolean canrun=false;
+
+	public Thing(int x, int y){
+		curx=x;
+		cury=y;
+	}
+
+	public void move(){
+
+		if(canrun){
+			if(curx<210&& cury==60){
+				curx+=speed;
+			}
+			if(curx==210&& cury<510){
+				cury+=speed;
+			}
+			if(curx<600 && cury==510){
+				curx+=speed;
+			}
+
+/*
+			if(curx>550 |cury>550){
+				active=false;
+			}
+			*/
+		}
+	}
+
+
+	public boolean isActive(){
+		return active;
+	}
+	public void paint(Graphics g){
+		if(active){
+			g.setColor(Color.CYAN);{
+				g.fillOval((int)curx,(int)cury,size,size);
+			}
+		}
+	}
+	public void moveDown() {
+		cury+=10;
+	}
+
+	public void checkPath(){
+
+		System.out.println(" " + curx + "-" + cury);
+
+	}
+
+	public void toAction(){
+		active=true;
+	}
+	public void go(){
+		canrun=true;
+	}
+
+
+	public boolean reach(){
+		boolean answer=false;
+
+		if(curx==endx && cury==endy)
+			answer=true;
+		return answer;
+
+	}
+
+}
+
+

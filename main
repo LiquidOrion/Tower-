@@ -1,0 +1,237 @@
+import java.applet.Applet;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.util.Scanner;
+
+import enemy.*;
+import tiles.*;
+
+public class Main extends Applet implements Runnable {
+
+	private Texture[][] grid3 = new Texture[20][20];
+	private boolean running = true;
+
+	private Scanner keyboard = new Scanner(System.in);
+
+	private int state=1;
+	private int lives=1;
+	private int c = 0;
+	private Image i;
+	private Graphics db;
+
+	private int currentwave;
+	private int time=0;
+
+	private	Wave my=new Wave();
+	public void init() {
+		setSize(600, 600);
+		generateMap();
+		state1();
+	}
+
+	private void state1() {
+		System.out.println("WELCOME TO TEST AREA OF TOWER DEFENCE GAME\n");
+
+		System.out.println("ENTER PLAY TO BEGIN| EXIT TO CLOSE\n");
+
+		boolean notanswer = true;
+		while(notanswer){
+			String answer = keyboard.nextLine();
+			if (answer.equalsIgnoreCase("play"))
+			{	state=2;
+			notanswer=false;
+			}
+			else if (answer.equalsIgnoreCase("exit")){
+				System.exit(0);
+			}
+			else if (answer.equalsIgnoreCase("credits")){
+				System.out.println("INFORMATION: \n "
+						+ "PROJECT NAME: TOWER DEFENSE GAME\n "
+						+"PROJECT START DATE: \n"
+						+ "CODERS: DAVID MILLER, \n"
+						+ " LAST UPDATE: 10/23/15\n");
+			}
+
+			else 
+				System.out.println("NOT RECOGNISED");
+
+		}
+
+	}
+	private void state2(){
+
+		boolean loop=true;
+		while(loop){
+			System.out.println("<OPTION>	START|PLACE\n");
+			String n= keyboard.nextLine();
+
+			if(n.equalsIgnoreCase("place")){
+				place();
+			}
+			else if(n.equalsIgnoreCase("start")){
+				state=3;
+				loop=false;
+			}
+		}
+	}
+
+	public void start() {
+		Thread thread = new Thread(this);
+		thread.start();
+	}
+
+	public void stop() {
+		running = false;
+	}
+
+	public void update(Graphics g) {
+		if (i == null) {
+			i = createImage(this.getSize().width, this.getSize().height);
+			db = i.getGraphics();
+		}
+		// db.setColor(getBackground());
+		// db.fillRect(0,0,this.getSize().width, this.getSize().height);
+		// db.setColor(getForeground());
+		paint(db);
+
+		g.drawImage(i, 0, 0, this);
+	}
+
+	public void run() {
+
+		if(state==2){
+			state2();
+			my.next();
+			currentwave=my.currentwave();
+		}
+		while (running) {
+			//	System.out.println(c++);
+			if(c>=390){
+				c=0;
+			}
+			time++;
+
+			my.action(time);
+
+			if(my.reachcheck()){
+				lives--;
+			}
+
+			if(lives==0){
+
+				System.out.println("\n GAME OVER\n");
+				stop();
+			}
+			if(my.lastreach()){
+				state2();
+				System.out.println("ENDER\n");
+			}
+
+
+			repaint();
+
+
+			try {
+				Thread.sleep(17);//17=60
+			} catch (InterruptedException e) {
+				// nothing
+				System.out.println("ERROR");
+			}
+		}
+
+	}
+
+	private void place() {
+
+		boolean notdone=true;
+
+		while(notdone){
+
+			System.out.println("Enter 2 spots within 20,20 ");
+
+			int x=keyboard.nextInt()-1;
+			int y=keyboard.nextInt()-1;
+
+			if(x>20|y>20){
+				System.out.println("Not Valid selection");
+			}
+			else if (grid3[x][y].canPlace()){
+				grid3[x][y]=new Tower(x,y);
+				notdone=false;
+
+			}
+			else 
+				System.out.println("Not Valid selection");
+		}
+
+		repaint();
+	}
+
+	public void generateMap() {
+
+		int[][] mapped = {
+
+				{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2 },
+				{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+				{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 } };
+
+		for (int i = 0; i < 20; i++) {
+			for (int j = 0; j < 20; j++) {
+				if(mapped[j][i]==1)
+					grid3[j][i]=new Path(i,j);
+				else if(mapped[j][i]==2)
+					grid3[j][i]=new Border(i,j);
+				else if(mapped[j][i]==3)
+					grid3[j][i]=new Tower(i,j);
+				else 
+					grid3[j][i] = new Texture(i, j);
+			}
+		}
+	}
+
+	public void paint(Graphics g) {
+
+
+		for (int i = 0; i < 20; i++) {
+			for (int j = 0; j < 20; j++) {
+				grid3[j][i].draw(g);
+			}
+		}
+
+
+		my.paint(g);
+
+		g.setColor(Color.black);
+		g.fillRect(500, 10, 90, 50);
+
+		g.setColor(Color.white);
+		g.drawRect(499, 9, 91, 51);
+		g.drawString("Lives:"+""+ lives, 505, 25);
+		g.drawString("Wave:"+""+currentwave , 505, 50);
+
+
+		if (running == false) {
+			g.drawString("GAME", 550, 25);
+			g.drawString("OVER" , 550, 50);
+		}
+	}
+
+}

@@ -73,6 +73,9 @@ public class Main extends Applet implements Runnable {
 				state=3;
 				loop=false;
 			}
+			else if (n.equalsIgnoreCase("exit")){
+				System.exit(0);
+			}
 		}
 	}
 

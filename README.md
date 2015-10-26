@@ -1,6 +1,6 @@
 # Tower-
 Lang: JAVA 
-project team: D.Miller, 
+project team: Semhar Gebregiorgis, Nathan Brotman, David Miller, Megan Olson, Rakan Alahmadi, Oliver Martel, 
 Desc:
   Project to develop software along with the following requirements:
   
